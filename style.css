@@ -83,7 +83,9 @@ body{
 }
 
 .pill{
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 8px 13px;
   border-radius: 999px;
   background: linear-gradient(135deg, rgba(255, 186, 213, 0.2), rgba(255, 231, 202, 0.15));
@@ -92,6 +94,13 @@ body{
   font-size: 13px;
   letter-spacing: 0.02em;
   box-shadow: 0 8px 22px rgba(28, 4, 16, 0.32);
+}
+
+.pill-logo{
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .music{
