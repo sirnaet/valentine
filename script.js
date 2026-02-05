@@ -66,18 +66,6 @@ function pickMessage(){
   msgEl.textContent = msg;
 }
 
-async function copyMessage(){
-  if (!copyBtn) return;
-  const text = msgEl.textContent.trim();
-  try {
-    await navigator.clipboard.writeText(text);
-    copyBtn.textContent = "Copied ✅";
-    setTimeout(() => (copyBtn.textContent = "Copy 📋"), 1200);
-  } catch {
-    prompt("Copy this:", text);
-  }
-}
-
 function setActiveChip(cat){
   currentCat = cat;
   chips.forEach(c => c.classList.toggle("active", c.dataset.cat === cat));
