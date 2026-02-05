@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Love Notes 💌</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Subtle hearts layer -->
+  <canvas id="hearts" class="hearts" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <div class="card" id="cardRoot">
+      <div class="topRow">
+        <div class="pill">Love Notes 💌</div>
+
+        <div class="music">
+          <iframe
+            class="yt-player"
+            width="320"
+            height="80"
+            src="https://open.spotify.com/embed/track/0tgVpDi06FyKpA1z0VMD4v?si=c87207343b3148c1"
+            title="Spotify player"
+            frameborder="0"
+            scrolling="no"
+            style="overflow:hidden"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+
+      <h1 id="msg" class="msg">Loading...</h1>
+
+      <div class="controls">
+        <button id="nextBtn" class="btn">Next ✨</button>
+        <button id="dlBtn" class="btn">Download card 🖼️</button>
+      </div>
+
+      <div class="filters">
+        <button class="chip active" data-cat="all">All</button>
+        <button class="chip" data-cat="romantic">Romantic</button>
+        <button class="chip" data-cat="cute">Cute</button>
+        <button class="chip" data-cat="funny">Funny</button>
+        <button class="chip" data-cat="deep">Deep</button>
+        <button class="chip" data-cat="self">Self-love</button>
+      </div>
+
+      <div class="footer">
+        <img class="logo" src="sirnaet-logo.png" alt="Sirnaet logo" />
+        <span>Made for everyone • Share the love ❤️</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Spotify embedded player (visible) -->
+
+  <script src="script.js"></script>
+</body>
+</html>
