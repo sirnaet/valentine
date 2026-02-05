@@ -1,27 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
+
 :root{
-  --bg1: #0f0a1a;
-  --bg2: #2a0f24;
-  --bg3: #3a1018;
-  --glass: rgba(255,255,255,0.10);
-  --border: rgba(255,255,255,0.14);
-  --text: rgba(255,255,255,0.92);
-  --muted: rgba(255,255,255,0.65);
-  --shadow: 0 25px 80px rgba(0,0,0,0.55);
+  --bg1: #1a0716;
+  --bg2: #390c2a;
+  --bg3: #5c132c;
+  --rose: #ff7aa8;
+  --rose-soft: #ffd3e3;
+  --gold: #f3d4a6;
+  --glass: rgba(36, 6, 24, 0.66);
+  --glass-2: rgba(255, 209, 224, 0.11);
+  --border: rgba(255, 217, 230, 0.28);
+  --text: rgba(255, 248, 252, 0.96);
+  --muted: rgba(255, 223, 236, 0.72);
+  --shadow: 0 30px 90px rgba(18, 3, 12, 0.65);
 }
 
 *{ box-sizing: border-box; }
 
 body{
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
   color: var(--text);
   height: 100vh;
   overflow: hidden;
 
   background:
-    radial-gradient(1000px 600px at 15% 20%, rgba(255,70,130,0.25), transparent 80%),
-    radial-gradient(900px 700px at 85% 40%, rgba(150,90,255,0.20), transparent 80%),
-    radial-gradient(700px 500px at 40% 85%, rgba(255,70,70,0.18), transparent 80%),
+    radial-gradient(900px 620px at 18% 20%, rgba(255, 103, 161, 0.34), transparent 78%),
+    radial-gradient(760px 560px at 86% 38%, rgba(255, 176, 144, 0.22), transparent 80%),
+    radial-gradient(820px 520px at 44% 84%, rgba(236, 74, 116, 0.25), transparent 82%),
     linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
 }
 
@@ -45,12 +51,27 @@ body{
 
 .card{
   width: min(820px, 92vw);
-  border-radius: 26px;
-  padding: 22px;
-  background: rgba(0,0,0,0.45);
+  border-radius: 30px;
+  padding: 24px;
+  background:
+    linear-gradient(160deg, rgba(255, 173, 202, 0.09), rgba(255, 173, 202, 0.02)),
+    var(--glass);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent 20%, rgba(255, 245, 251, 0.09) 50%, transparent 80%);
+  opacity: 0.55;
+  animation: shimmer 8s linear infinite;
 }
 
 .topRow{
@@ -63,12 +84,14 @@ body{
 
 .pill{
   display: inline-block;
-  padding: 8px 12px;
+  padding: 8px 13px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.16);
+  background: linear-gradient(135deg, rgba(255, 186, 213, 0.2), rgba(255, 231, 202, 0.15));
+  border: 1px solid rgba(255, 220, 234, 0.35);
   color: var(--muted);
-  font-size: 14px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 22px rgba(28, 4, 16, 0.32);
 }
 
 .music{
@@ -77,10 +100,18 @@ body{
   gap: 10px;
 }
 
-.yt-player{
-  border: 1px solid rgba(255,255,255,0.16);
+.spotify-player{
+  width: min(360px, 82vw);
+  height: 80px;
+  border: 1px solid rgba(255, 213, 230, 0.25);
   border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 12px 32px rgba(18, 3, 12, 0.5);
+}
+
+.playlist-btn{
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .vol{
@@ -90,10 +121,12 @@ body{
 
 .msg{
   margin: 18px 0 18px;
-  font-size: clamp(24px, 3.6vw, 44px);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  text-shadow: 0 10px 35px rgba(0,0,0,0.6);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(36px, 5.2vw, 62px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-shadow: 0 10px 35px rgba(18, 3, 12, 0.58);
   min-height: 2.6em;
 }
 
@@ -106,16 +139,20 @@ body{
 
 .btn{
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.20);
-  background: rgba(255,255,255,0.14);
-  color: white;
+  border: 1px solid rgba(255, 222, 237, 0.35);
+  background: linear-gradient(135deg, rgba(255, 169, 202, 0.24), rgba(255, 220, 194, 0.2));
+  color: rgba(255, 247, 252, 0.97);
   padding: 12px 14px;
-  border-radius: 14px;
-  font-weight: 650;
-  transition: transform 0.08s ease, background 0.2s ease;
+  border-radius: 999px;
+  font-weight: 700;
+  transition: transform 0.12s ease, background 0.22s ease, box-shadow 0.22s ease;
+  box-shadow: 0 10px 24px rgba(18, 3, 12, 0.35);
 }
 
-.btn:hover{ background: rgba(255,255,255,0.22); }
+.btn:hover{
+  background: linear-gradient(135deg, rgba(255, 183, 212, 0.34), rgba(255, 231, 210, 0.3));
+  box-shadow: 0 14px 28px rgba(18, 3, 12, 0.45);
+}
 .btn:active{ transform: scale(0.98); }
 
 .btn.ghost{
@@ -136,25 +173,30 @@ body{
 
 .chip{
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.10);
-  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255, 219, 233, 0.3);
+  background: var(--glass-2);
+  color: rgba(255, 242, 249, 0.9);
   padding: 10px 12px;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 13px;
+  transition: transform 0.14s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
-.chip:hover{ background: rgba(255,255,255,0.16); }
+.chip:hover{
+  transform: translateY(-1px);
+  background: rgba(255, 214, 231, 0.22);
+}
 
 .chip.active{
-  background: rgba(255,255,255,0.24);
-  border-color: rgba(255,255,255,0.28);
+  background: linear-gradient(135deg, rgba(255, 167, 201, 0.38), rgba(255, 226, 197, 0.3));
+  border-color: rgba(255, 232, 242, 0.45);
+  box-shadow: 0 8px 18px rgba(18, 3, 12, 0.32);
 }
 
 .footer{
   margin-top: 16px;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255, 224, 236, 0.64);
   font-size: 12px;
   text-align: right;
   display: flex;
@@ -167,5 +209,48 @@ body{
   height: 32px;
   width: auto;
   opacity: 1;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45));
+  filter: drop-shadow(0 4px 10px rgba(18, 3, 12, 0.5));
+}
+
+@keyframes shimmer{
+  0%{ transform: translateX(-45%); }
+  100%{ transform: translateX(45%); }
+}
+
+@media (max-width: 720px){
+  .wrap{
+    padding: 14px;
+  }
+
+  .card{
+    border-radius: 24px;
+    padding: 18px;
+  }
+
+  .topRow{
+    gap: 10px;
+  }
+
+  .music{
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .spotify-player{
+    width: min(100%, 360px);
+  }
+
+  .msg{
+    margin-top: 14px;
+    font-size: clamp(34px, 11vw, 50px);
+    min-height: 2.2em;
+  }
+
+  .controls{
+    gap: 8px;
+  }
+
+  .btn{
+    padding: 11px 13px;
+  }
 }
