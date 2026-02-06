@@ -5,6 +5,9 @@
       "runtime": "vercel-php@0.6.0"
     }
   },
+  "installCommand": "composer install --no-dev --optimize-autoloader",
+  "buildCommand": "php -v",
+  "outputDirectory": "public",
   "routes": [
     { "src": "/(.*)", "dest": "api/index.php" }
   ]
