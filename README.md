@@ -9,12 +9,14 @@ A small static web app that displays random love notes, lets users filter by vib
 - Download current note as a PNG card
 - Subtle animated heart background
 - Embedded Spotify player
+- Add and fetch notes from a Laravel API (`/api/notes`)
 
 ## Project Structure
 
 - `index.html` - App markup
 - `style.css` - App styling
 - `script.js` - UI behavior, note data, animation, and card export logic
+- `LARAVEL_API_SETUP.md` - Exact Laravel files/routes for DB-backed notes API
 - `music/` - Local media assets (if used)
 - `sirnaet-logo.png` - Footer logo
 
@@ -31,6 +33,8 @@ python3 -m http.server 8000
 ```
 
 Then open `http://localhost:8000`.
+
+To use database-backed notes, follow `LARAVEL_API_SETUP.md`.
 
 ## Notes
 

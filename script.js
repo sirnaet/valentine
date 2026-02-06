@@ -1,46 +1,17 @@
-const data = {
-  romantic: [
-    "I’d choose you in every lifetime.",
-    "You feel like home to me.",
-    "You make the ordinary feel magical.",
-    "If love had a sound, it would be your laugh.",
-    "I’m lucky you exist."
-  ],
-  cute: [
-    "You’re my favorite notification.",
-    "I like you more than I planned.",
-    "You’re my happy place.",
-    "If I could, I’d send you a hug through the screen.",
-    "You + me = a good day."
-  ],
-  funny: [
-    "Roses are red, I’m bad at poems… but I like you a lot.",
-    "You stole my heart. I’ll allow it.",
-    "If you were a Wi-Fi signal, I’d never disconnect.",
-    "I’d share my fries with you. That’s real love.",
-    "You’re the reason my screen time is high."
-  ],
-  deep: [
-    "Love should feel like peace, not confusion.",
-    "You deserve effort that doesn’t need reminders.",
-    "The right love won’t make you beg.",
-    "Being understood is a kind of romance.",
-    "Soft love is still real love."
-  ],
-  self: [
-    "You are worthy of love, even on your quiet days.",
-    "Love yourself like you love your favorite person.",
-    "You don’t have to earn kindness. You deserve it.",
-    "Your presence is enough.",
-    "You are allowed to start again."
-  ]
-};
+const API_BASE =
+  window.NOTES_API_BASE ??
+  (window.location.protocol === "file:" ? "http://127.0.0.1:8000" : "");
+const ALLOWED_CATEGORIES = new Set(["romantic", "cute", "funny", "deep", "self"]);
+let notes = [];
 
 const msgEl = document.getElementById("msg");
 const nextBtn = document.getElementById("nextBtn");
 const copyBtn = document.getElementById("copyBtn");
 const dlBtn = document.getElementById("dlBtn");
 const chips = [...document.querySelectorAll(".chip")];
+const addNoteForm = document.getElementById("addNoteForm");
+const noteInput = document.getElementById("noteInput");
+const catInput = document.getElementById("catInput");
 
 const bgMusic = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
@@ -49,14 +20,46 @@ const vol = document.getElementById("vol");
 let currentCat = "all";
 let lastMsg = "";
 
+function normalizeCategory(cat){
+  return ALLOWED_CATEGORIES.has(cat) ? cat : "romantic";
+}
+
+function apiUrl(path){
+  return `${API_BASE}${path}`;
+}
+
+async function loadNotes(){
+  try {
+    const res = await fetch(apiUrl("/api/notes"));
+    if (!res.ok) throw new Error("Failed to fetch notes");
+    const payload = await res.json();
+    notes = Array.isArray(payload)
+      ? payload
+          .map((n) => ({
+            message: String(n.message ?? "").trim(),
+            category: normalizeCategory(n.category),
+          }))
+          .filter((n) => n.message.length > 0)
+      : [];
+  } catch (err) {
+    console.error(err);
+    notes = [];
+    msgEl.textContent = "Could not load notes from API.";
+  }
+}
+
 function poolFor(cat){
-  if (cat === "all") return Object.values(data).flat();
-  return data[cat] ?? Object.values(data).flat();
+  if (!notes.length) return [];
+  if (cat === "all") return notes.map((n) => n.message);
+  return notes.filter((n) => n.category === cat).map((n) => n.message);
 }
 
 function pickMessage(){
   const pool = poolFor(currentCat);
-  if (!pool.length) return;
+  if (!pool.length) {
+    msgEl.textContent = "No notes found for this category.";
+    return;
+  }
 
   let msg = pool[Math.floor(Math.random() * pool.length)];
   if (pool.length > 1) {
@@ -70,6 +73,26 @@ function setActiveChip(cat){
   currentCat = cat;
   chips.forEach(c => c.classList.toggle("active", c.dataset.cat === cat));
   pickMessage();
+}
+
+async function addNote(message, category){
+  const res = await fetch(apiUrl("/api/notes"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message, category }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to create note");
+  }
+
+  const created = await res.json();
+  const note = {
+    message: String(created.message ?? message).trim(),
+    category: normalizeCategory(created.category ?? category),
+  };
+  notes.unshift(note);
+  return note;
 }
 
 /* ---------- Music (local file) ---------- */
@@ -363,8 +386,26 @@ dlBtn.addEventListener("click", downloadCard);
 
 chips.forEach(chip => chip.addEventListener("click", () => setActiveChip(chip.dataset.cat)));
 
+if (addNoteForm) {
+  addNoteForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const message = (noteInput?.value ?? "").trim();
+    const category = normalizeCategory(catInput?.value);
+
+    if (!message) return;
+
+    try {
+      await addNote(message, category);
+      if (noteInput) noteInput.value = "";
+      setActiveChip(category);
+    } catch (err) {
+      console.error(err);
+      alert("Could not save note. Check Laravel API is running.");
+    }
+  });
+}
+
 loadMusicPrefs();
-pickMessage();
 
 resizeHearts();
 initHearts();
@@ -372,3 +413,10 @@ requestAnimationFrame(animateHearts);
 
 // Optional: auto-rotate messages
 setInterval(() => pickMessage(), 12000);
+
+async function initNotes(){
+  await loadNotes();
+  pickMessage();
+}
+
+initNotes();

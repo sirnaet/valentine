@@ -47,6 +47,24 @@
         >Open playlist 🎵</a>
       </div>
 
+      <form id="addNoteForm" class="add-note-form">
+        <input
+          id="noteInput"
+          type="text"
+          maxlength="255"
+          placeholder="Write a new note..."
+          required
+        />
+        <select id="catInput">
+          <option value="romantic">Romantic</option>
+          <option value="cute">Cute</option>
+          <option value="funny">Funny</option>
+          <option value="deep">Deep</option>
+          <option value="self">Self-love</option>
+        </select>
+        <button type="submit" class="btn">Add note</button>
+      </form>
+
       <div class="filters">
         <button class="chip active" data-cat="all">All</button>
         <button class="chip" data-cat="romantic">Romantic</button>
@@ -65,6 +83,9 @@
 
   <!-- Spotify embedded player (visible) -->
 
+  <script>
+    window.NOTES_API_BASE = "http://127.0.0.1:8000";
+  </script>
   <script src="script.js"></script>
 </body>
 </html>

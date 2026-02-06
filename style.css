@@ -146,6 +146,28 @@ body{
   margin-bottom: 14px;
 }
 
+.add-note-form{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.add-note-form input,
+.add-note-form select{
+  border: 1px solid rgba(255, 222, 237, 0.35);
+  background: rgba(39, 9, 28, 0.64);
+  color: rgba(255, 247, 252, 0.97);
+  padding: 12px 14px;
+  border-radius: 999px;
+  outline: none;
+}
+
+.add-note-form input{
+  flex: 1;
+  min-width: 230px;
+}
+
 .btn{
   cursor: pointer;
   border: 1px solid rgba(255, 222, 237, 0.35);
